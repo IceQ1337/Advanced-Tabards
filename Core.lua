@@ -1,4 +1,4 @@
--- Copyright (C) IceQ1337, 2018-2019, All Rights Reserved
+-- Copyright (C) IceQ1337, 2018-2022, All Rights Reserved
 -- https://wow.curseforge.com/projects/advanced-tabards
 
 -- Addon Variables
