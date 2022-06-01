@@ -275,5 +275,23 @@ Tabards.List = {
     },
     ["174647"] = { -- Rajani Tabard
         FACTION = 2415 
+    }, -- Shadowlands
+    ["179282"] = { -- Court of Harvesters Tabard (Requires Court of Harvesters - Exalted)
+        FACTION = 2413
+    },
+    ["180456"] = { -- Colors of the Undying Army (Requires The Undying Army - Exalted)
+        FACTION = 2410
+    },
+    ["178991"] = { -- Tabard of the Ascended (Requires The Ascended - Exalted)
+        FACTION = 2407
+    },
+    ["178336"] = { -- Tabard of the Wild Hunt (Requires The Wild Hunt - Exalted)
+        FACTION = 2465
+    },
+    ["186997"] = { -- Death's Advance Tabard (Requires Death's Advance - Exalted)
+        FACTION = 2470
+    },
+    ["190611"] = { -- Tabard of the Enlightened (Requires The Enlightened - Exalted)
+        FACTION = 2478
     }
 };
