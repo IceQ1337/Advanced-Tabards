@@ -22,5 +22,11 @@ IF EXIST %PACKAGE_NAME%*.zip (
   del %PACKAGE_NAME%*.zip
 )
 
+Rem Navigate to parent directory
+cd ..
+
 Rem Create PACKAGE_NAME.zip
-E:\Programme\7-Zip\7z.exe a -tzip -mx=9 %PACKAGE_NAME%_v%PACKAGE_VERSION%.zip .\* -x!%PACKAGE_NAME%.zip -x!.git -x!.github -x!.gitignore -x!make.bat -x!.vscode -x!.idea -x!README.md
+E:\Programme\7-Zip\7z.exe a -tzip -mx=9 %PACKAGE_NAME%_v%PACKAGE_VERSION%.zip .\%PACKAGE_NAME% -xr!%PACKAGE_NAME%.zip -xr!.git -xr!.github -xr!.gitignore -xr!make.bat -xr!.vscode -xr!.idea -xr!README.md
+
+Rem Move PACKAGE_NAME.zip
+move /y %PACKAGE_NAME%_v%PACKAGE_VERSION%.zip .\%PACKAGE_NAME%\
