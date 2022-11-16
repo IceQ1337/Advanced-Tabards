@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this AddOn will be documented in this file.
 
+## [1.0.7] - 2022-11-16
+### Changed
+- Increased the interface version for patch 10.0.2 ( Dragonflight )
+- Removed the year from copyrights. The addon is under the MIT license.
+
+## [1.0.6] - 2022-06-01
+### Added
+- Missing Shadowlands Tabards
+
+### Changed
+- Updated to Patch 9.2.5
+- Copyright
+
 ## [1.0.5] - 2020-02-08
 ### Added
 - Missing Battle for Azeroth Tabard(s)
