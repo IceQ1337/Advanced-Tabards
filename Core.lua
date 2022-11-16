@@ -125,4 +125,5 @@ function AddOn.SetGameTooltip(tooltip)
         end
     end
 end
-GameTooltip:HookScript("OnTooltipSetItem", AddOn.SetGameTooltip);
+
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, AddOn.SetGameTooltip)
