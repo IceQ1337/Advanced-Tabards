@@ -2,7 +2,7 @@
 
 ## Title: Advanced Tabards
 ## Author: IceQ1337 <Shuuichi-Frostwolf (EU)>
-## Version: 1.0.7
+## Version: 1.0.8
 ## Notes: Advanced Tabard functionality including reputation tooltips and auto-tracking.
 
 ## SavedVariables: AT_Settings
