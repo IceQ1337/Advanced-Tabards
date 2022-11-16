@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this AddOn will be documented in this file.
 
+## [1.0.8] - 2022-11-16
+### Changed
+- Replaced old GameTooltip script handlers with new ToolTipDataProcessor API
+
 ## [1.0.7] - 2022-11-16
 ### Changed
 - Increased the interface version for patch 10.0.2 ( Dragonflight )
