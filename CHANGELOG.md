@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this AddOn will be documented in this file.
 
+## [1.0.9] - 2022-11-19
+### Changed
+- Fix calling an undefined function for non-item tooltips
+
 ## [1.0.8] - 2022-11-16
 ### Changed
 - Replaced old GameTooltip script handlers with new ToolTipDataProcessor API
