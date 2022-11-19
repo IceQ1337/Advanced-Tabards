@@ -102,6 +102,8 @@ AddOn.eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
 function AddOn.SetGameTooltip(tooltip)
     if not AddOn.Settings.Options["enableTooltips"] then return; end
 
+    if tooltip.GetItem == nil or type(tooltip.GetItem) ~= 'function' then return; end
+
     local _, link = tooltip:GetItem();
     if not link then return; end
 
