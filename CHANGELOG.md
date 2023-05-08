@@ -1,5 +1,9 @@
 # Changelog
-All notable changes to this AddOn will be documented in this file.
+All notable changes to this Add-On will be documented in this file.
+
+## [1.0.10] - 2023-05-08
+- Interface Version Update for Patch 10.1
+- TOC Update
 
 ## [1.0.9] - 2022-11-19
 ### Changed
