@@ -12,9 +12,4 @@ Due to a long period of inactivity and to help with code maintenance, this repos
 *  Enable/Disable automatic tracking  
 *  Enable/Disable chat messages (e.g. on automatic tracking)  
 
-~~**Available Commands:**~~  
-*  ~~/at - Toggle tooltips~~  
-*  ~~/at autotrack - Toggle automatic tracking~~  
-*  ~~/at help - Show all available commands~~  
-
 If you discover a bug, please check if it has already been reported at https://github.com/IceQ1337/Advanced-Tabards/issues and if not, feel free to create a new issue.  
