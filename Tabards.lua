@@ -296,5 +296,20 @@ Tabards.List = {
     },
     ["190611"] = { -- Tabard of the Enlightened (Requires The Enlightened - Exalted)
         FACTION = 2478
+    }, -- Dragonflight
+    ["198802"] = { -- Artisan's Consortium Tabard (Requires Esteemed reputation with the Artisan's Consortium on any character)
+        FACTION = 2544
+    },
+    ["198731"] = { -- Iskaara Tuskarr Tabard (Received from the Iskaara Tuskarr after completing the story)
+        FACTION = 2511
+    },
+    ["198730"] = { -- Dragonscale Expedition Tabard (Received from the Dragonscale Expedition after completing the story)
+        FACTION = 2507
+    },
+    ["198732"] = { -- Valdrakken Accord Tabard (Received from the Valdrakken Accord after completing the story)
+        FACTION = 2510
+    },
+    ["205286"] = { -- Loamm Niffen Tabard (Received from the Loamm Niffen after completing the story)
+        FACTION = 2564
     }
 };
