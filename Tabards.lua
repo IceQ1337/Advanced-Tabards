@@ -311,5 +311,8 @@ Tabards.List = {
     },
     ["205286"] = { -- Loamm Niffen Tabard (Received from the Loamm Niffen after completing the story)
         FACTION = 2564
+    },
+    ["210501"] = { -- Dream Wardens Tabard (Received from the Dream Wardens after reaching renown 10)
+        FACTION = 2574
     }
 };
