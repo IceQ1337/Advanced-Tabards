@@ -1,9 +1,9 @@
 ## Interface: 100205
 
 ## Title: Advanced Tabards
-## Author: IceQ1337 <Shuuichi-Blackmoore (EU)>
-## Version: 1.0.14
 ## Notes: Advanced Tabard functionality including reputation tooltips and auto-tracking.
+## Author: IceQ1337 <Shuuichi-Blackmoore (EU)>
+## Version: @project-version@
 
 ## X-Curse-Project-ID: 306771
 
