@@ -38,6 +38,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.update-interface-version.outputs.commit_hash }}
 
       - name: Create Tag
         id: tag_version
@@ -57,7 +59,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: ${{ needs.update-interface-version.outputs.commit_hash }}
+          #fetch-depth: 0
 
       - name: Package and Release
         uses: BigWigsMods/packager@v2
