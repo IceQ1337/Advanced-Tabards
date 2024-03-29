@@ -5,6 +5,8 @@
 ## Author: IceQ1337 <Shuuichi-Blackmoore (EU)>
 ## Version: @project-version@
 
+## X-Date: @project-timestamp@
+## X-Website: https://www.curseforge.com/wow/addons/advanced-tabards
 ## X-Curse-Project-ID: 306771
 
 ## SavedVariables: AT_Settings
