@@ -1,0 +1,54 @@
+name: Update Interface Version
+
+on:
+  schedule:
+    - cron: 0 12 * * 2
+  workflow_dispatch:
+
+jobs:
+  update-interface-version:
+    name: Update Interface Version
+    runs-on: ubuntu-latest
+    outputs:
+      changes_detected: ${{ steps.auto-commit.outputs.changes_detected }}
+      commit_hash: ${{ steps.auto-commit.outputs.commit_hash }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update Interface Version
+        uses: oppzippy/update-toc-action@v1
+        with:
+          toc-path: AdvancedTabards.toc
+
+      - name: Commit Changes
+        id: auto-commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🚀 Update Interface Version"
+          commit_options: "--no-gpg-sign"
+          file_pattern: "*.toc"
+          branch: master
+
+  release:
+    name: Tag, Package and Release
+    needs: update-interface-version
+    runs-on: ubuntu-latest
+    if: ${{ needs.update-interface-version.outputs.changes_detected == 'true' }}
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        #with:
+          #ref: ${{ needs.update-interface-version.outputs.commit_hash }}
+
+      - name: Create Tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Package and Release
+        uses: BigWigsMods/packager@v2
