@@ -35,6 +35,8 @@ jobs:
     needs: update-interface-version
     runs-on: ubuntu-latest
     if: ${{ needs.update-interface-version.outputs.changes_detected == 'true' }}
+    outputs:
+      new_tag: ${{ steps.tag_version.outputs.new_tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,6 +48,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_sha: ${{ needs.update-interface-version.outputs.commit_hash }}
 
   release:
     name: Package and Release
@@ -59,8 +62,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ needs.update-interface-version.outputs.commit_hash }}
-          #fetch-depth: 0
+          ref: ${{ needs.tag.outputs.new_tag }}
 
       - name: Package and Release
         uses: BigWigsMods/packager@v2
