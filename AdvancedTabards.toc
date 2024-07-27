@@ -1,4 +1,4 @@
-## Interface: 100207
+## Interface: 110000
 
 ## Title: Advanced Tabards
 ## Notes: Advanced Tabard functionality including reputation tooltips and auto-tracking.
