@@ -127,9 +127,13 @@ function AddOn.SetGameTooltip(tooltip)
                 local factionInfo;
 
                 if standingID == 8 then
-                    factionInfo = _G["FACTION_STANDING_LABEL" .. standingID]
+                    factionInfo = _G["FACTION_STANDING_LABEL" .. standingID];
                 else
-                    factionInfo = string.format("%s %s / %s (%0.2f%%)", _G["FACTION_STANDING_LABEL" .. standingID], barMax, barMax, (barMax / barMax) * 100);
+                    local reactionGained = barValue - barMin;
+                    local reactionNeeded = barMax - barMin;
+                    local reactionPercentage =  ((barValue - barMin) / (barMax - barMin)) * 100;
+
+                    factionInfo = string.format("%s %s / %s (%0.2f%%)", _G["FACTION_STANDING_LABEL" .. standingID], reactionGained, reactionNeeded, reactionPercentage);
                 end
 
                 tooltip:AddLine("\n");
