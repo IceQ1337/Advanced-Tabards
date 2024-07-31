@@ -36,7 +36,7 @@ function AddOn:ADDON_LOADED(addon)
     self.Settings.Options = _G["AT_Settings"] or AddOn.Settings.DefaultSettings;
     
     if AddOn.Settings.Options["welcomeMessage"] then
-        self.PrintLongMSG("v" .. self.AddonVersion .. " loaded successfully.");
+        self.PrintLongMSG(self.AddonVersion .. " loaded successfully.");
     end
 end
 
