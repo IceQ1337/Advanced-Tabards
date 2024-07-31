@@ -16,7 +16,7 @@ AddOn.Settings = Settings;
 -- Interface Options
 -- Main
 Settings.Interface = {};
-Settings.Interface.MainPanel = CreateFrame("Frame", "AT_OPTIONSFRAME", UIParent);
+Settings.Interface.MainPanel = CreateFrame("Frame", "AT_OPTIONSFRAME");
 Settings.Interface.MainPanel.name = AddOn.AddonName;
 
 Settings.Interface.MainPanel.title = Settings.Interface.MainPanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
@@ -54,8 +54,6 @@ Settings.Interface.MainPanel.url:SetText("URL:");
 Settings.Interface.MainPanel.url.text = Settings.Interface.MainPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall");
 Settings.Interface.MainPanel.url.text:SetPoint("LEFT", Settings.Interface.MainPanel.url, "RIGHT", 8, 0);
 Settings.Interface.MainPanel.url.text:SetText("https://wow.curseforge.com/projects/advanced-tabards");
-
-InterfaceOptions_AddCategory(Settings.Interface.MainPanel);
 
 -- General
 Settings.Interface.GeneralPanel = CreateFrame("Frame");
@@ -116,4 +114,18 @@ Settings.Interface.GeneralPanel.togglechatmessages.text = Settings.Interface.Gen
 Settings.Interface.GeneralPanel.togglechatmessages.text:SetPoint("LEFT", Settings.Interface.GeneralPanel.togglechatmessages, "RIGHT", 8, 0);
 Settings.Interface.GeneralPanel.togglechatmessages.text:SetText("Enable/Disable Chat Messages");
 
-InterfaceOptions_AddCategory(Settings.Interface.GeneralPanel);
+-- Register Interface Options
+function AddOn.AddOptionsCategory(frame)
+    if frame.parent then
+        local category = _G.Settings.GetCategory(frame.parent)
+        local subcategory, layout = _G.Settings.RegisterCanvasLayoutSubcategory(category, frame, frame.name)
+        subcategory.ID = frame.name
+    else
+        local category, layout = _G.Settings.RegisterCanvasLayoutCategory(frame, frame.name)
+        category.ID = frame.name
+        _G.Settings.RegisterAddOnCategory(category)
+    end
+end
+
+AddOn.AddOptionsCategory(Settings.Interface.MainPanel);
+AddOn.AddOptionsCategory(Settings.Interface.GeneralPanel);
