@@ -114,15 +114,26 @@ function AddOn.SetGameTooltip(tooltip)
         if itemID then
             if AddOn.Tabards.List[itemID] then
                 local itemFaction = AddOn.Tabards.List[itemID].FACTION;
-                local name, description, standingID, barMin, barMax, barValue, atWarWith, canToggleAtWar, isHeader, isCollapsed, hasRep, isWatched, isChild, factionID, hasBonusRepGain, canBeLFGBonus = GetFactionInfoByID(itemFaction);
-                
-                local factionInfo;
-                if standingID ~= 8 then -- Exalted Fix
-                    factionInfo = string.format("%s %s / %s (%0.2f%%)", _G["FACTION_STANDING_LABEL" .. standingID], barValue - barMin, barMax - barMin, ((barValue - barMin) / (barMax - barMin)) * 100);
+                local factionData = _G.C_Reputation.GetFactionDataByID(itemFaction);
+
+                if not factionData then return; end
+
+                local name, standingID, barValue, barMin, barMax;
+                name = factionData.name;
+                standingID = factionData.reaction;
+                barValue = factionData.currentStanding;
+                barMin = factionData.currentReactionThreshold;
+                barMax = factionData.nextReactionThreshold;
+
+                local factionTooltip;
+
+                if standingID == 8 then
+                    factionTooltip = _G["FACTION_STANDING_LABEL" .. standingID]
                 else
-                    factionInfo = string.format("%s %s / %s (%0.2f%%)", _G["FACTION_STANDING_LABEL" .. standingID], barMax, barMax, (barMax / barMax) * 100);
+                    factionTooltip = string.format("%s %s / %s (%0.2f%%)", _G["FACTION_STANDING_LABEL" .. standingID], barMax, barMax, (barMax / barMax) * 100);
                 end
-                tooltip:AddLine("\n[" .. AddOn.AddonName .. "]\n" .. name .. " - " .. factionInfo .. "\n");
+
+                tooltip:AddLine("\n[" .. AddOn.AddonName .. "]\n" .. name .. " - " .. factionTooltip .. "\n");
             end
         end
     end
