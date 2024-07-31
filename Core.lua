@@ -118,22 +118,27 @@ function AddOn.SetGameTooltip(tooltip)
 
                 if not factionData then return; end
 
-                local name, standingID, barValue, barMin, barMax;
-                name = factionData.name;
+                local standingID, barValue, barMin, barMax;
                 standingID = factionData.reaction;
                 barValue = factionData.currentStanding;
                 barMin = factionData.currentReactionThreshold;
                 barMax = factionData.nextReactionThreshold;
 
-                local factionTooltip;
+                local factionInfo;
 
                 if standingID == 8 then
-                    factionTooltip = _G["FACTION_STANDING_LABEL" .. standingID]
+                    factionInfo = _G["FACTION_STANDING_LABEL" .. standingID]
                 else
-                    factionTooltip = string.format("%s %s / %s (%0.2f%%)", _G["FACTION_STANDING_LABEL" .. standingID], barMax, barMax, (barMax / barMax) * 100);
+                    factionInfo = string.format("%s %s / %s (%0.2f%%)", _G["FACTION_STANDING_LABEL" .. standingID], barMax, barMax, (barMax / barMax) * 100);
                 end
 
-                tooltip:AddLine("\n[" .. AddOn.AddonName .. "]\n" .. name .. " - " .. factionTooltip .. "\n");
+                tooltip:AddLine("\n");
+
+                if AddOn.Settings.Options["showAddonNameInTooltip"] then
+                    tooltip:AddLine("[" .. AddOn.AddonName .. "]");
+                end
+
+                tooltip:AddLine(factionData.name .. " - " .. factionInfo);
             end
         end
     end

@@ -6,6 +6,7 @@ local Settings = {};
 Settings.DefaultSettings = {
     ["welcomeMessage"] = true,
     ["enableTooltips"] = true,
+    ["showAddonNameInTooltip"] = true,
     ["enableAutotrack"] = true,
     ["chatMessages"] = false
 };
@@ -86,7 +87,7 @@ do
 
     local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, name, variable, type(defaultValue), defaultValue)
     _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
-	_G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
 end
 
 do
@@ -97,7 +98,18 @@ do
 
     local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, name, variable, type(defaultValue), defaultValue)
     _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
-	_G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+end
+
+do
+    local variable = "showAddonNameInTooltip";
+    local name = "Enable/Disable Addon Name in Tooltip";
+    local tooltip = "Enable or disable the addon name in the tooltip.";
+    local defaultValue = true;
+
+    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, name, variable, type(defaultValue), defaultValue)
+    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
 end
 
 do
@@ -108,7 +120,7 @@ do
 
     local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, name, variable, type(defaultValue), defaultValue)
     _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
-	_G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
 end
 
 do
@@ -119,5 +131,5 @@ do
 
     local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, name, variable, type(defaultValue), defaultValue)
     _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
-	_G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
 end
