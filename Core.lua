@@ -50,7 +50,7 @@ function AddOn:PLAYER_LOGOUT(addon)
 end
 
 function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
-    if not self.Settings.Options["enableAutotrack"] then return; end
+    if not AddOn.Settings.Options["enableAutotrack"] then return; end
 
     local tabardSlotID, tabardTextureName = GetInventorySlotInfo("TabardSlot");
     if tabardSlotID then
@@ -69,7 +69,7 @@ function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
 
                 if self.Tabards.List[tabardID].FACTION == 1168 and not IsInGuild() then
                     if AddOn.Settings.Options["chatMessages"] then
-                        self.PrintShortMSG(TEXT_COLOR_RED .. "Automatic Tracking Failed! ( Not in Guild )");
+                        AddOn.PrintShortMSG(TEXT_COLOR_RED .. "Automatic Tracking Failed! ( Not in Guild )");
                     end
                     return;
                 end
@@ -81,7 +81,7 @@ function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
                     if factions[i].factionID == self.Tabards.List[tabardID].FACTION then
                         SetWatchedFactionIndex(i);
                         if AddOn.Settings.Options["chatMessages"] then
-                            self.PrintShortMSG("Automatic Tracking of: " .. TEXT_COLOR_GREEN .. factions[i].name);
+                            AddOn.PrintShortMSG("Automatic Tracking of: " .. TEXT_COLOR_GREEN .. factions[i].name);
                         end
                     end
                 end
