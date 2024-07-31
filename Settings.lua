@@ -11,6 +11,35 @@ Settings.DefaultSettings = {
 };
 Settings.Options = {};
 
+-- Setup Functions
+function AddOn.AddOptionsCategory(frame)
+    if Settings.AddonOptionCategoryID then
+        print("Main category already exists.");
+        return;
+    end
+
+    local category, layout = _G.Settings.RegisterCanvasLayoutCategory(frame, frame.name);
+    Settings.AddonOptionCategoryID = category:GetID();
+    _G.Settings.RegisterAddOnCategory(category);
+
+    return category;
+end
+
+function AddOn.AddOptionsSubCategory(name)
+    if not Settings.AddonOptionCategoryID then return; end
+
+    local parentCategory = _G.Settings.GetCategory(Settings.AddonOptionCategoryID);
+    local subCategory, layout = _G.Settings.RegisterVerticalLayoutSubcategory(parentCategory, name);
+    _G.Settings.RegisterAddOnCategory(subCategory);
+
+    return subCategory;
+end
+
+function AddOn.OnSettingChanged(_, setting, value)
+    local variable = setting:GetVariable();
+    Settings.Options[variable] = value;
+end
+
 AddOn.Settings = Settings;
 
 -- Interface Options
@@ -55,77 +84,51 @@ Settings.Interface.MainPanel.url.text = Settings.Interface.MainPanel:CreateFontS
 Settings.Interface.MainPanel.url.text:SetPoint("LEFT", Settings.Interface.MainPanel.url, "RIGHT", 8, 0);
 Settings.Interface.MainPanel.url.text:SetText("https://wow.curseforge.com/projects/advanced-tabards");
 
--- General
-Settings.Interface.GeneralPanel = CreateFrame("Frame");
-Settings.Interface.GeneralPanel.name = "General";
-Settings.Interface.GeneralPanel.parent = Settings.Interface.MainPanel.name;
-
-Settings.Interface.GeneralPanel.okay = function(self)
-    Settings.Options["welcomeMessage"] = Settings.Interface.GeneralPanel.togglewelcomemessage:GetChecked();
-    Settings.Options["enableTooltips"] = Settings.Interface.GeneralPanel.toggletooltip:GetChecked();
-    Settings.Options["enableAutotrack"] = Settings.Interface.GeneralPanel.toggleautotrack:GetChecked();
-    Settings.Options["chatMessages"] = Settings.Interface.GeneralPanel.togglechatmessages:GetChecked();
-end
-
-Settings.Interface.GeneralPanel.refresh = function(self)
-    Settings.Interface.GeneralPanel.togglewelcomemessage:SetChecked(Settings.Options["welcomeMessage"]);
-    Settings.Interface.GeneralPanel.toggletooltip:SetChecked(Settings.Options["enableTooltips"]);
-    Settings.Interface.GeneralPanel.toggleautotrack:SetChecked(Settings.Options["enableAutotrack"]);   
-    Settings.Interface.GeneralPanel.togglechatmessages:SetChecked(Settings.Options["chatMessages"]);  
-end
-
-Settings.Interface.GeneralPanel.cancel = function(self)
-    self.refresh();
-end
-
-Settings.Interface.GeneralPanel.default = function(self)
-    Settings.Options = Settings.DefaultSettings;
-end
-
-Settings.Interface.GeneralPanel.title = Settings.Interface.GeneralPanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
-Settings.Interface.GeneralPanel.title:SetPoint("TOPLEFT", 16, -16);
-Settings.Interface.GeneralPanel.title:SetText(AddOn.AddonName .. " - General Options");
-
-Settings.Interface.GeneralPanel.togglewelcomemessage = CreateFrame("CheckButton", "AT_TOGGLEWELCOMEMESSAGE", Settings.Interface.GeneralPanel, "ChatConfigCheckButtonTemplate");
-Settings.Interface.GeneralPanel.togglewelcomemessage:SetPoint("TOPLEFT", Settings.Interface.GeneralPanel.title, "BOTTOMLEFT", 0, -8);
-
-Settings.Interface.GeneralPanel.togglewelcomemessage.text = Settings.Interface.GeneralPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall");
-Settings.Interface.GeneralPanel.togglewelcomemessage.text:SetPoint("LEFT", Settings.Interface.GeneralPanel.togglewelcomemessage, "RIGHT", 8, 0);
-Settings.Interface.GeneralPanel.togglewelcomemessage.text:SetText("Enable/Disable Welcome Message");
-
-Settings.Interface.GeneralPanel.toggletooltip = CreateFrame("CheckButton", "AT_TOGGLETOOLTP", Settings.Interface.GeneralPanel, "ChatConfigCheckButtonTemplate");
-Settings.Interface.GeneralPanel.toggletooltip:SetPoint("TOPLEFT", Settings.Interface.GeneralPanel.togglewelcomemessage, "BOTTOMLEFT", 0, -8);
-
-Settings.Interface.GeneralPanel.toggletooltip.text = Settings.Interface.GeneralPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall");
-Settings.Interface.GeneralPanel.toggletooltip.text:SetPoint("LEFT", Settings.Interface.GeneralPanel.toggletooltip, "RIGHT", 8, 0);
-Settings.Interface.GeneralPanel.toggletooltip.text:SetText("Enable/Disable Tooltips");
-
-Settings.Interface.GeneralPanel.toggleautotrack = CreateFrame("CheckButton", "AT_TOGGLEAUTOTRACK", Settings.Interface.GeneralPanel, "ChatConfigCheckButtonTemplate");
-Settings.Interface.GeneralPanel.toggleautotrack:SetPoint("TOPLEFT", Settings.Interface.GeneralPanel.toggletooltip, "BOTTOMLEFT", 0, -8);
-
-Settings.Interface.GeneralPanel.toggleautotrack.text = Settings.Interface.GeneralPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall");
-Settings.Interface.GeneralPanel.toggleautotrack.text:SetPoint("LEFT", Settings.Interface.GeneralPanel.toggleautotrack, "RIGHT", 8, 0);
-Settings.Interface.GeneralPanel.toggleautotrack.text:SetText("Enable/Disable Automatic Tracking");
-
-Settings.Interface.GeneralPanel.togglechatmessages = CreateFrame("CheckButton", "AT_TOGGLECHATMESSAGES", Settings.Interface.GeneralPanel, "ChatConfigCheckButtonTemplate");
-Settings.Interface.GeneralPanel.togglechatmessages:SetPoint("TOPLEFT", Settings.Interface.GeneralPanel.toggleautotrack, "BOTTOMLEFT", 0, -8);
-
-Settings.Interface.GeneralPanel.togglechatmessages.text = Settings.Interface.GeneralPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall");
-Settings.Interface.GeneralPanel.togglechatmessages.text:SetPoint("LEFT", Settings.Interface.GeneralPanel.togglechatmessages, "RIGHT", 8, 0);
-Settings.Interface.GeneralPanel.togglechatmessages.text:SetText("Enable/Disable Chat Messages");
-
--- Register Interface Options
-function AddOn.AddOptionsCategory(frame)
-    if frame.parent then
-        local category = _G.Settings.GetCategory(frame.parent)
-        local subcategory, layout = _G.Settings.RegisterCanvasLayoutSubcategory(category, frame, frame.name)
-        subcategory.ID = frame.name
-    else
-        local category, layout = _G.Settings.RegisterCanvasLayoutCategory(frame, frame.name)
-        category.ID = frame.name
-        _G.Settings.RegisterAddOnCategory(category)
-    end
-end
-
 AddOn.AddOptionsCategory(Settings.Interface.MainPanel);
-AddOn.AddOptionsCategory(Settings.Interface.GeneralPanel);
+
+-- General
+Settings.Interface.GeneralPanel = AddOn.AddOptionsSubCategory("General");
+
+do
+    local variable = "welcomeMessage";
+    local name = "Enable/Disable Welcome Message";
+    local tooltip = "Enable or disable the welcome message.";
+    local defaultValue = true;
+
+    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, name, variable, type(defaultValue), defaultValue)
+    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+	_G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+end
+
+do
+    local variable = "enableTooltips";
+    local name = "Enable/Disable Tooltips";
+    local tooltip = "Enable or disable the tooltips.";
+    local defaultValue = true;
+
+    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, name, variable, type(defaultValue), defaultValue)
+    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+	_G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+end
+
+do
+    local variable = "enableAutotrack";
+    local name = "Enable/Disable Automatic Tracking";
+    local tooltip = "Enable or disable the automatic tracking.";
+    local defaultValue = false;
+
+    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, name, variable, type(defaultValue), defaultValue)
+    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+	_G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+end
+
+do
+    local variable = "chatMessages";
+    local name = "Enable/Disable Chat Messages";
+    local tooltip = "Enable or disable the chat messages.";
+    local defaultValue = true;
+
+    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, name, variable, type(defaultValue), defaultValue)
+    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+	_G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+end
