@@ -58,13 +58,10 @@ function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
         if tabardEquipped then
             local tabardID = tostring(tabardEquipped);
             if self.Tabards.List[tabardID] then
-                ExpandAllFactionHeaders();
+                _G.C_Reputation.ExpandAllFactionHeaders();
                 local factions = {};
-                for x = 1, GetNumFactions() do
-                    factions[x] = {};
-                    factions[x].name, factions[x].description, factions[x].standingID, factions[x].barMin, factions[x].barMax, 
-                    factions[x].barValue, factions[x].atWarWith, factions[x].canToggleAtWar, factions[x].isHeader, factions[x].isCollapsed, 
-                    factions[x].hasRep, factions[x].isWatched, factions[x].isChild, factions[x].factionID, factions[x].hasBonusRepGain, factions[x].canBeLFGBonus = GetFactionInfo(x);
+                for x = 1, _G.C_Reputation.GetNumFactions() do
+                    factions[x] = _G.C_Reputation.GetFactionDataByIndex(x);
                 end
 
                 if self.Tabards.List[tabardID].FACTION == 1168 and not IsInGuild() then
@@ -76,10 +73,10 @@ function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
 
                 for i, v in pairs(factions) do
                     if factions[i].isWatched then return; end -- Is Watched
-                    if factions[i].standingID == 8 then return; end -- Is Exalted
+                    if factions[i].reaction == 8 then return; end -- Is Exalted
 
                     if factions[i].factionID == self.Tabards.List[tabardID].FACTION then
-                        SetWatchedFactionIndex(i);
+                        _G.C_Reputation.SetWatchedFactionByIndex(i);
                         if AddOn.Settings.Options["chatMessages"] then
                             AddOn.PrintShortMSG("Automatic Tracking of: " .. TEXT_COLOR_GREEN .. factions[i].name);
                         end
