@@ -135,7 +135,7 @@ function AddOn.SetGameTooltip(tooltip)
                 tooltip:AddLine("\n");
 
                 if AddOn.Settings.Options["showAddonNameInTooltip"] then
-                    tooltip:AddLine("[" .. AddOn.AddonName .. "]");
+                    tooltip:AddLine("[" .. AddOn.AddonName .. "]", 0, 1, 1);
                 end
 
                 tooltip:AddLine(factionData.name .. " - " .. factionInfo);
