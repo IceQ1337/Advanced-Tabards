@@ -16,7 +16,7 @@ AddOn.Settings = Settings;
 -- Interface Options
 -- Main
 Settings.Interface = {};
-Settings.Interface.MainPanel = CreateFrame("Frame", "AT_OPTIONSFRAME");
+Settings.Interface.MainPanel = CreateFrame("Frame", AddOn.AddonName .. "_SettingsFrame");
 Settings.Interface.MainPanel.name = AddOn.AddonName;
 
 Settings.Interface.MainPanel.title = Settings.Interface.MainPanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
