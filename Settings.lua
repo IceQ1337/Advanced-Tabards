@@ -12,19 +12,6 @@ Settings.DefaultSettings = {
 Settings.Options = {};
 
 -- Setup Functions
-function AddOn.AddOptionsCategory(frame)
-    if Settings.AddonOptionCategoryID then
-        print("Main category already exists.");
-        return;
-    end
-
-    local category, layout = _G.Settings.RegisterCanvasLayoutCategory(frame, frame.name);
-    Settings.AddonOptionCategoryID = category:GetID();
-    _G.Settings.RegisterAddOnCategory(category);
-
-    return category;
-end
-
 function AddOn.AddOptionsSubCategory(name)
     if not Settings.AddonOptionCategoryID then return; end
 
@@ -84,7 +71,9 @@ Settings.Interface.MainPanel.url.text = Settings.Interface.MainPanel:CreateFontS
 Settings.Interface.MainPanel.url.text:SetPoint("LEFT", Settings.Interface.MainPanel.url, "RIGHT", 8, 0);
 Settings.Interface.MainPanel.url.text:SetText("https://wow.curseforge.com/projects/advanced-tabards");
 
-AddOn.AddOptionsCategory(Settings.Interface.MainPanel);
+local mainCategory, mainCategoryLayout = _G.Settings.RegisterCanvasLayoutCategory(Settings.Interface.MainPanel, Settings.Interface.MainPanel.name);
+Settings.AddonOptionCategoryID = mainCategory:GetID();
+_G.Settings.RegisterAddOnCategory(mainCategory);
 
 -- General
 Settings.Interface.GeneralPanel = AddOn.AddOptionsSubCategory("General");
