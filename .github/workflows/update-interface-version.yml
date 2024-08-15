@@ -2,7 +2,7 @@ name: Update Interface Version
 
 on:
   schedule:
-    - cron: 0 12 * * 2
+    - cron: 0 23 * * 2,3
   workflow_dispatch:
 
 jobs:
