@@ -31,22 +31,23 @@ end
 -- Event Handlers
 function AddOn:ADDON_LOADED(addon)
 	if not addon == AddonName then return end
-    self.eventFrame:UnregisterEvent("ADDON_LOADED");
+
+    AddOn.eventFrame:UnregisterEvent("ADDON_LOADED");
     
-    self.Settings.Options = _G["AT_Settings"] or AddOn.Settings.DefaultSettings;
+    AddOn.Settings.Options = _G["AT_Settings"] or AddOn.Settings.DefaultSettings;
     
     if AddOn.Settings.Options["welcomeMessage"] then
-        self.PrintLongMSG(self.AddonVersion .. " loaded successfully.");
+        AddOn.PrintLongMSG(AddOn.AddonVersion .. " loaded successfully.");
     end
 end
 
 function AddOn:PLAYER_ENTERING_WORLD(addon)
-    self.eventFrame:RegisterEvent("PLAYER_LOGOUT");
-    self.eventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
+    AddOn.eventFrame:RegisterEvent("PLAYER_LOGOUT");
+    AddOn.eventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
 end
 
 function AddOn:PLAYER_LOGOUT(addon)
-    _G["AT_Settings"] = self.Settings.Options;
+    _G["AT_Settings"] = AddOn.Settings.Options;
 end
 
 function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
@@ -57,14 +58,14 @@ function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
         local tabardEquipped = GetInventoryItemID("Player", tabardSlotID);
         if tabardEquipped then
             local tabardID = tostring(tabardEquipped);
-            if self.Tabards.List[tabardID] then
+            if AddOn.Tabards.List[tabardID] then
                 _G.C_Reputation.ExpandAllFactionHeaders();
                 local factions = {};
                 for x = 1, _G.C_Reputation.GetNumFactions() do
                     factions[x] = _G.C_Reputation.GetFactionDataByIndex(x);
                 end
 
-                if self.Tabards.List[tabardID].FACTION == 1168 and not IsInGuild() then
+                if AddOn.Tabards.List[tabardID].FACTION == 1168 and not IsInGuild() then
                     if AddOn.Settings.Options["chatMessages"] then
                         AddOn.PrintShortMSG(TEXT_COLOR_RED .. "Automatic Tracking Failed! ( Not in Guild )");
                     end
@@ -75,7 +76,7 @@ function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
                     if factions[i].isWatched then return; end -- Is Watched
                     if factions[i].reaction == 8 then return; end -- Is Exalted
 
-                    if factions[i].factionID == self.Tabards.List[tabardID].FACTION then
+                    if factions[i].factionID == AddOn.Tabards.List[tabardID].FACTION then
                         _G.C_Reputation.SetWatchedFactionByIndex(i);
                         if AddOn.Settings.Options["chatMessages"] then
                             AddOn.PrintShortMSG("Automatic Tracking of: " .. TEXT_COLOR_GREEN .. factions[i].name);
