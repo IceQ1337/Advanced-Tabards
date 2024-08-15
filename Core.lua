@@ -147,3 +147,10 @@ function AddOn.SetGameTooltip(tooltip)
 end
 
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, AddOn.SetGameTooltip)
+
+-- Register Slash Commands
+SlashCmdList.AdvancedTabards = function()
+    _G.Settings.OpenToCategory(AddOn.Settings.AddonOptionCategoryID);
+end
+
+SLASH_AdvancedTabards1 = "/at";
