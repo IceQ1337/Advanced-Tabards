@@ -83,7 +83,7 @@ Settings.Interface.GeneralPanel = AddOn.AddOptionsSubCategory("General")
 function Settings.Setup()
     do
         local variable = "welcomeMessage"
-        local name = "Enable/Disable Welcome Message"
+        local name = "Welcome Message"
         local tooltip = "Enable or disable the welcome message."
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
@@ -105,7 +105,7 @@ function Settings.Setup()
 
     do
         local variable = "enableTooltips"
-        local name = "Enable/Disable Tooltips"
+        local name = "Tooltips"
         local tooltip = "Enable or disable the tooltips."
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
@@ -127,7 +127,7 @@ function Settings.Setup()
 
     do
         local variable = "showAddonNameInTooltip"
-        local name = "Enable/Disable Addon Name in Tooltip"
+        local name = "Addon Name in Tooltip"
         local tooltip = "Enable or disable the addon name in the tooltip."
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
@@ -149,7 +149,7 @@ function Settings.Setup()
 
     do
         local variable = "enableAutotrack"
-        local name = "Enable/Disable Automatic Tracking"
+        local name = "Automatic Tracking"
         local tooltip = "Enable or disable the automatic tracking."
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
@@ -171,7 +171,7 @@ function Settings.Setup()
 
     do
         local variable = "chatMessages"
-        local name = "Enable/Disable Chat Messages"
+        local name = "Chat Messages"
         local tooltip = "Enable or disable the chat messages."
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
