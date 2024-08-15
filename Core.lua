@@ -3,10 +3,10 @@
 
 -- Addon Variables
 local AddonName, AddOn = ...;
-AddOn.AddonName = GetAddOnMetadata("AdvancedTabards", "Title");
-AddOn.AddonVersion = GetAddOnMetadata("AdvancedTabards", "Version");
-AddOn.AddonAuthor = GetAddOnMetadata("AdvancedTabards", "Author");
-AddOn.AddonNotes = GetAddOnMetadata("AdvancedTabards", "Notes");
+AddOn.AddonName = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Title");
+AddOn.AddonVersion = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Version");
+AddOn.AddonAuthor = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Author");
+AddOn.AddonNotes = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Notes");
 
 _G["AdvancedTabards"] = AddOn;
 
