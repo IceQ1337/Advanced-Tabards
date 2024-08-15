@@ -2,85 +2,93 @@
 -- https://wow.curseforge.com/projects/advanced-tabards
 
 -- Addon Variables
-local AddonName, AddOn = ...;
-AddOn.AddonName = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Title");
-AddOn.AddonVersion = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Version");
-AddOn.AddonAuthor = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Author");
-AddOn.AddonNotes = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Notes");
+local AddonName, AddOn = ...
+AddOn.AddonName = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Title")
+AddOn.AddonVersion = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Version")
+AddOn.AddonAuthor = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Author")
+AddOn.AddonNotes = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Notes")
 
-_G["AdvancedTabards"] = AddOn;
+_G["AdvancedTabards"] = AddOn
 
 -- Text Globals
-TEXT_COLOR_RED = "|cFFFF0000";
-TEXT_COLOR_GREEN = "|cFF00FF00";
-TEXT_COLOR_YELLOW = "|cFFFFFF00";
-TEXT_COLOR_CYAN = "|cFF00FFFF";
-TEXT_COLOR_RESET = "|r";
+TEXT_COLOR_RED = "|cFFFF0000"
+TEXT_COLOR_GREEN = "|cFF00FF00"
+TEXT_COLOR_YELLOW = "|cFFFFFF00"
+TEXT_COLOR_CYAN = "|cFF00FFFF"
+TEXT_COLOR_RESET = "|r"
 
 -- Chat MSG
 function AddOn.PrintShortMSG(msg)
-	text = TEXT_COLOR_CYAN .. "AT > " .. TEXT_COLOR_RESET .. msg;
-	DEFAULT_CHAT_FRAME:AddMessage(text);
+    text = TEXT_COLOR_CYAN .. "AT > " .. TEXT_COLOR_RESET .. msg
+    DEFAULT_CHAT_FRAME:AddMessage(text)
 end
 
 function AddOn.PrintLongMSG(msg)
-	text = TEXT_COLOR_CYAN .. AddOn.AddonName .. ": " .. TEXT_COLOR_RESET .. msg;
-	DEFAULT_CHAT_FRAME:AddMessage(text);
+    text = TEXT_COLOR_CYAN .. AddOn.AddonName .. ": " .. TEXT_COLOR_RESET .. msg
+    DEFAULT_CHAT_FRAME:AddMessage(text)
 end
 
 -- Event Handlers
 function AddOn:ADDON_LOADED(addon)
-	if not addon == AddonName then return end
+    if not addon == AddonName then
+        return
+    end
 
-    AddOn.eventFrame:UnregisterEvent("ADDON_LOADED");
-    
-    AddOn.Settings.Options = _G["AT_Settings"] or AddOn.Settings.DefaultSettings;
-    AddOn.Settings.Setup();
-    
+    AddOn.eventFrame:UnregisterEvent("ADDON_LOADED")
+
+    AddOn.Settings.Options = _G["AT_Settings"] or AddOn.Settings.DefaultSettings
+    AddOn.Settings.Setup()
+
     if AddOn.Settings.Options["welcomeMessage"] then
-        AddOn.PrintLongMSG(AddOn.AddonVersion .. " loaded successfully.");
+        AddOn.PrintLongMSG(AddOn.AddonVersion .. " loaded successfully.")
     end
 end
 
 function AddOn:PLAYER_ENTERING_WORLD(addon)
-    AddOn.eventFrame:RegisterEvent("PLAYER_LOGOUT");
-    AddOn.eventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
+    AddOn.eventFrame:RegisterEvent("PLAYER_LOGOUT")
+    AddOn.eventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 end
 
 function AddOn:PLAYER_LOGOUT(addon)
-    _G["AT_Settings"] = AddOn.Settings.Options;
+    _G["AT_Settings"] = AddOn.Settings.Options
 end
 
 function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
-    if not AddOn.Settings.Options["enableAutotrack"] then return; end
+    if not AddOn.Settings.Options["enableAutotrack"] then
+        return
+    end
 
-    local tabardSlotID, tabardTextureName = GetInventorySlotInfo("TabardSlot");
+    local tabardSlotID, tabardTextureName = GetInventorySlotInfo("TabardSlot")
     if tabardSlotID then
-        local tabardEquipped = GetInventoryItemID("Player", tabardSlotID);
+        local tabardEquipped = GetInventoryItemID("Player", tabardSlotID)
         if tabardEquipped then
-            local tabardID = tostring(tabardEquipped);
+            local tabardID = tostring(tabardEquipped)
             if AddOn.Tabards.List[tabardID] then
-                _G.C_Reputation.ExpandAllFactionHeaders();
-                local factions = {};
+                _G.C_Reputation.ExpandAllFactionHeaders()
+                local factions = {}
                 for x = 1, _G.C_Reputation.GetNumFactions() do
-                    factions[x] = _G.C_Reputation.GetFactionDataByIndex(x);
+                    factions[x] = _G.C_Reputation.GetFactionDataByIndex(x)
                 end
 
                 if AddOn.Tabards.List[tabardID].FACTION == 1168 and not IsInGuild() then
                     if AddOn.Settings.Options["chatMessages"] then
-                        AddOn.PrintShortMSG(TEXT_COLOR_RED .. "Automatic Tracking Failed! ( Not in Guild )");
+                        AddOn.PrintShortMSG(TEXT_COLOR_RED .. "Automatic Tracking Failed! ( Not in Guild )")
                     end
-                    return;
+                    return
                 end
 
                 for i, v in pairs(factions) do
-                    if factions[i].isWatched then return; end -- Is Watched
-                    if factions[i].reaction == 8 then return; end -- Is Exalted
+                    if factions[i].isWatched then
+                        return
+                    end -- Is Watched
+                    if factions[i].reaction == 8 then
+                        return
+                    end -- Is Exalted
 
                     if factions[i].factionID == AddOn.Tabards.List[tabardID].FACTION then
-                        _G.C_Reputation.SetWatchedFactionByIndex(i);
+                        _G.C_Reputation.SetWatchedFactionByIndex(i)
                         if AddOn.Settings.Options["chatMessages"] then
-                            AddOn.PrintShortMSG("Automatic Tracking of: " .. TEXT_COLOR_GREEN .. factions[i].name);
+                            AddOn.PrintShortMSG("Automatic Tracking of: " .. TEXT_COLOR_GREEN .. factions[i].name)
                         end
                     end
                 end
@@ -90,58 +98,78 @@ function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
 end
 
 -- Event Frame
-AddOn.eventFrame = CreateFrame("Frame", nil, UIParent);
-AddOn.eventFrame:SetScript("OnEvent", function(self, event, ...)
-    if AddOn[event] then AddOn[event](AddOn, ...) end
-end);
-AddOn.eventFrame:RegisterEvent("ADDON_LOADED");
-AddOn.eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
+AddOn.eventFrame = CreateFrame("Frame", nil, UIParent)
+AddOn.eventFrame:SetScript(
+    "OnEvent",
+    function(self, event, ...)
+        if AddOn[event] then
+            AddOn[event](AddOn, ...)
+        end
+    end
+)
+AddOn.eventFrame:RegisterEvent("ADDON_LOADED")
+AddOn.eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 -- Hook Game Tooltip
 function AddOn.SetGameTooltip(tooltip)
-    if not AddOn.Settings.Options["enableTooltips"] then return; end
+    if not AddOn.Settings.Options["enableTooltips"] then
+        return
+    end
 
-    if tooltip.GetItem == nil or type(tooltip.GetItem) ~= 'function' then return; end
+    if tooltip.GetItem == nil or type(tooltip.GetItem) ~= "function" then
+        return
+    end
 
-    local _, link = tooltip:GetItem();
-    if not link then return; end
+    local _, link = tooltip:GetItem()
+    if not link then
+        return
+    end
 
-    local itemString = string.match(link, "item[%-?%d:]+");
+    local itemString = string.match(link, "item[%-?%d:]+")
 
     if itemString then
-        local _, itemID = strsplit(":", itemString);
+        local _, itemID = strsplit(":", itemString)
         if itemID then
             if AddOn.Tabards.List[itemID] then
-                local itemFaction = AddOn.Tabards.List[itemID].FACTION;
-                local factionData = _G.C_Reputation.GetFactionDataByID(itemFaction);
+                local itemFaction = AddOn.Tabards.List[itemID].FACTION
+                local factionData = _G.C_Reputation.GetFactionDataByID(itemFaction)
 
-                if not factionData then return; end
+                if not factionData then
+                    return
+                end
 
-                local standingID, barValue, barMin, barMax;
-                standingID = factionData.reaction;
-                barValue = factionData.currentStanding;
-                barMin = factionData.currentReactionThreshold;
-                barMax = factionData.nextReactionThreshold;
+                local standingID, barValue, barMin, barMax
+                standingID = factionData.reaction
+                barValue = factionData.currentStanding
+                barMin = factionData.currentReactionThreshold
+                barMax = factionData.nextReactionThreshold
 
-                local factionInfo;
+                local factionInfo
 
                 if standingID == 8 then
-                    factionInfo = _G["FACTION_STANDING_LABEL" .. standingID];
+                    factionInfo = _G["FACTION_STANDING_LABEL" .. standingID]
                 else
-                    local reactionGained = barValue - barMin;
-                    local reactionNeeded = barMax - barMin;
-                    local reactionPercentage =  ((barValue - barMin) / (barMax - barMin)) * 100;
+                    local reactionGained = barValue - barMin
+                    local reactionNeeded = barMax - barMin
+                    local reactionPercentage = ((barValue - barMin) / (barMax - barMin)) * 100
 
-                    factionInfo = string.format("%s %s / %s (%0.2f%%)", _G["FACTION_STANDING_LABEL" .. standingID], reactionGained, reactionNeeded, reactionPercentage);
+                    factionInfo =
+                        string.format(
+                        "%s %s / %s (%0.2f%%)",
+                        _G["FACTION_STANDING_LABEL" .. standingID],
+                        reactionGained,
+                        reactionNeeded,
+                        reactionPercentage
+                    )
                 end
 
-                tooltip:AddLine("\n");
+                tooltip:AddLine("\n")
 
                 if AddOn.Settings.Options["showAddonNameInTooltip"] then
-                    tooltip:AddLine("[" .. AddOn.AddonName .. "]", 0, 1, 1);
+                    tooltip:AddLine("[" .. AddOn.AddonName .. "]", 0, 1, 1)
                 end
 
-                tooltip:AddLine(factionData.name .. " - " .. factionInfo);
+                tooltip:AddLine(factionData.name .. " - " .. factionInfo)
             end
         end
     end
@@ -151,7 +179,7 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, AddOn.SetGame
 
 -- Register Slash Commands
 SlashCmdList.AdvancedTabards = function()
-    _G.Settings.OpenToCategory(AddOn.Settings.AddonOptionCategoryID);
+    _G.Settings.OpenToCategory(AddOn.Settings.AddonOptionCategoryID)
 end
 
-SLASH_AdvancedTabards1 = "/at";
+SLASH_AdvancedTabards1 = "/at"
