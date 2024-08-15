@@ -79,57 +79,59 @@ _G.Settings.RegisterAddOnCategory(mainCategory);
 -- General
 Settings.Interface.GeneralPanel = AddOn.AddOptionsSubCategory("General");
 
-do
-    local variable = "welcomeMessage";
-    local name = "Enable/Disable Welcome Message";
-    local tooltip = "Enable or disable the welcome message.";
-    local defaultValue = Settings.Options[variable];
+function Settings.Setup()
+    do
+        local variable = "welcomeMessage";
+        local name = "Enable/Disable Welcome Message";
+        local tooltip = "Enable or disable the welcome message.";
+        local defaultValue = Settings.Options[variable];
+    
+        local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
+        _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+        _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    end
 
-    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
-    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
-    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
-end
+    do
+        local variable = "enableTooltips";
+        local name = "Enable/Disable Tooltips";
+        local tooltip = "Enable or disable the tooltips.";
+        local defaultValue = Settings.Options[variable];
+    
+        local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
+        _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+        _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    end
 
-do
-    local variable = "enableTooltips";
-    local name = "Enable/Disable Tooltips";
-    local tooltip = "Enable or disable the tooltips.";
-    local defaultValue = Settings.Options[variable];
+    do
+        local variable = "showAddonNameInTooltip";
+        local name = "Enable/Disable Addon Name in Tooltip";
+        local tooltip = "Enable or disable the addon name in the tooltip.";
+        local defaultValue = Settings.Options[variable];
+    
+        local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
+        _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+        _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    end
 
-    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
-    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
-    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
-end
+    do
+        local variable = "enableAutotrack";
+        local name = "Enable/Disable Automatic Tracking";
+        local tooltip = "Enable or disable the automatic tracking.";
+        local defaultValue = Settings.Options[variable];
+    
+        local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
+        _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+        _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    end
 
-do
-    local variable = "showAddonNameInTooltip";
-    local name = "Enable/Disable Addon Name in Tooltip";
-    local tooltip = "Enable or disable the addon name in the tooltip.";
-    local defaultValue = Settings.Options[variable];
-
-    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
-    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
-    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
-end
-
-do
-    local variable = "enableAutotrack";
-    local name = "Enable/Disable Automatic Tracking";
-    local tooltip = "Enable or disable the automatic tracking.";
-    local defaultValue = Settings.Options[variable];
-
-    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
-    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
-    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
-end
-
-do
-    local variable = "chatMessages";
-    local name = "Enable/Disable Chat Messages";
-    local tooltip = "Enable or disable the chat messages.";
-    local defaultValue = Settings.Options[variable];
-
-    local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
-    _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
-    _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    do
+        local variable = "chatMessages";
+        local name = "Enable/Disable Chat Messages";
+        local tooltip = "Enable or disable the chat messages.";
+        local defaultValue = Settings.Options[variable];
+    
+        local setting = _G.Settings.RegisterAddOnSetting(Settings.Interface.GeneralPanel, variable, variable, Settings.Options, type(defaultValue), name, defaultValue)
+        _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
+        _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
+    end
 end

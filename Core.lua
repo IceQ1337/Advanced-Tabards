@@ -35,6 +35,7 @@ function AddOn:ADDON_LOADED(addon)
     AddOn.eventFrame:UnregisterEvent("ADDON_LOADED");
     
     AddOn.Settings.Options = _G["AT_Settings"] or AddOn.Settings.DefaultSettings;
+    AddOn.Settings.Setup();
     
     if AddOn.Settings.Options["welcomeMessage"] then
         AddOn.PrintLongMSG(AddOn.AddonVersion .. " loaded successfully.");
