@@ -93,7 +93,7 @@ function Settings.Setup()
         local name = "Welcome Message"
         local tooltip = "Enable or disable the welcome message."
         local defaultValue = Settings.DefaultSettings[variable]
-        local currentValue = Settings.Options[variable] or defaultValue
+        local currentValue = Settings.Options[variable]
 
         local setting =
             _G.Settings.RegisterAddOnSetting(
@@ -117,7 +117,7 @@ function Settings.Setup()
         local name = "Tooltips"
         local tooltip = "Enable or disable the tooltips."
         local defaultValue = Settings.DefaultSettings[variable]
-        local currentValue = Settings.Options[variable] or defaultValue
+        local currentValue = Settings.Options[variable]
 
         local setting =
             _G.Settings.RegisterAddOnSetting(
@@ -141,7 +141,7 @@ function Settings.Setup()
         local name = "Addon Name in Tooltip"
         local tooltip = "Enable or disable the addon name in the tooltip."
         local defaultValue = Settings.DefaultSettings[variable]
-        local currentValue = Settings.Options[variable] or defaultValue
+        local currentValue = Settings.Options[variable]
 
         local setting =
             _G.Settings.RegisterAddOnSetting(
@@ -165,7 +165,7 @@ function Settings.Setup()
         local name = "Automatic Tracking"
         local tooltip = "Enable or disable the automatic tracking."
         local defaultValue = Settings.DefaultSettings[variable]
-        local currentValue = Settings.Options[variable] or defaultValue
+        local currentValue = Settings.Options[variable]
 
         local setting =
             _G.Settings.RegisterAddOnSetting(
@@ -189,7 +189,7 @@ function Settings.Setup()
         local name = "Chat Messages"
         local tooltip = "Enable or disable the chat messages."
         local defaultValue = Settings.DefaultSettings[variable]
-        local currentValue = Settings.Options[variable] or defaultValue
+        local currentValue = Settings.Options[variable]
 
         local setting =
             _G.Settings.RegisterAddOnSetting(
