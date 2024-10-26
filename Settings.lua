@@ -6,9 +6,9 @@ local Settings = {}
 
 Settings.DefaultSettings = {}
 Settings.Options = {}
+Settings.Key = AddOn.AddonName .. "_Settings"
 
 AddOn.Settings = Settings
-AddOn.SettingsKey = AddOn.AddonName .. "_Settings"
 
 -- Setup Functions
 function AddOn.AddOptionsSubCategory(name)
@@ -86,7 +86,7 @@ function Settings.Get(name)
 end
 
 function Settings.Setup()
-    Settings.Options = _G[AddOn.SettingsKey] or Settings.DefaultSettings
+    Settings.Options = _G[AddOn.Settings.Key] or Settings.DefaultSettings
 
     do
         local variable = Settings.GetVariable("WelcomeMessage")

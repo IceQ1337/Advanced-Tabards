@@ -51,7 +51,7 @@ function AddOn:PLAYER_ENTERING_WORLD(addon)
 end
 
 function AddOn:PLAYER_LOGOUT(addon)
-    _G[AddOn.SettingsKey] = AddOn.Settings.Options
+    _G[AddOn.Settings.Key] = AddOn.Settings.Options
 end
 
 function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
