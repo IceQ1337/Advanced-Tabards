@@ -36,10 +36,10 @@ function AddOn:ADDON_LOADED(addon)
 
     AddOn.eventFrame:UnregisterEvent("ADDON_LOADED")
 
-    AddOn.Settings.Options = _G["AT_Settings"] or AddOn.Settings.DefaultSettings
+    AddOn.Settings.Options = _G[AddOn.SettingsKey] or AddOn.Settings.DefaultSettings
     AddOn.Settings.Setup()
 
-    if AddOn.Settings.Options["welcomeMessage"] then
+    if AddOn.Settings.Get("WelcomeMessage") then
         AddOn.PrintLongMSG(AddOn.AddonVersion .. " loaded successfully.")
     end
 end
@@ -50,11 +50,11 @@ function AddOn:PLAYER_ENTERING_WORLD(addon)
 end
 
 function AddOn:PLAYER_LOGOUT(addon)
-    _G["AT_Settings"] = AddOn.Settings.Options
+    _G[AddOn.SettingsKey] = AddOn.Settings.Options
 end
 
 function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
-    if not AddOn.Settings.Options["enableAutotrack"] then
+    if not AddOn.Settings.Get("EnableAutotrack") then
         return
     end
 
@@ -71,9 +71,10 @@ function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
                 end
 
                 if AddOn.Tabards.List[tabardID].FACTION == 1168 and not IsInGuild() then
-                    if AddOn.Settings.Options["chatMessages"] then
+                    if AddOn.Settings.Get("ChatMessages") then
                         AddOn.PrintShortMSG(TEXT_COLOR_RED .. "Automatic Tracking Failed! ( Not in Guild )")
                     end
+
                     return
                 end
 
@@ -87,7 +88,7 @@ function AddOn:PLAYER_EQUIPMENT_CHANGED(addon)
 
                     if factions[i].factionID == AddOn.Tabards.List[tabardID].FACTION then
                         _G.C_Reputation.SetWatchedFactionByIndex(i)
-                        if AddOn.Settings.Options["chatMessages"] then
+                        if AddOn.Settings.Get("ChatMessages") then
                             AddOn.PrintShortMSG("Automatic Tracking of: " .. TEXT_COLOR_GREEN .. factions[i].name)
                         end
                     end
@@ -112,7 +113,7 @@ AddOn.eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 -- Hook Game Tooltip
 function AddOn.SetGameTooltip(tooltip)
-    if not AddOn.Settings.Options["enableTooltips"] then
+    if not AddOn.Settings.Get("EnableTooltips") then
         return
     end
 
@@ -165,7 +166,7 @@ function AddOn.SetGameTooltip(tooltip)
 
                 tooltip:AddLine("\n")
 
-                if AddOn.Settings.Options["showAddonNameInTooltip"] then
+                if AddOn.Settings.Get("ShowAddonNameInTooltip") then
                     tooltip:AddLine("[" .. AddOn.AddonName .. "]", 0, 1, 1)
                 end
 

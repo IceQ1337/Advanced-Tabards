@@ -1,15 +1,14 @@
 -- Copyright (C) IceQ1337, All Rights Reserved
 -- https://wow.curseforge.com/projects/advanced-tabards
+
 local _, AddOn = ...
 local Settings = {}
-Settings.DefaultSettings = {
-    ["welcomeMessage"] = true,
-    ["enableTooltips"] = true,
-    ["showAddonNameInTooltip"] = true,
-    ["enableAutotrack"] = true,
-    ["chatMessages"] = false
-}
+
+Settings.DefaultSettings = {}
 Settings.Options = {}
+
+AddOn.Settings = Settings
+AddOn.SettingsKey = AddOn.AddonName .. "_Settings"
 
 -- Setup Functions
 function AddOn.AddOptionsSubCategory(name)
@@ -28,8 +27,6 @@ function AddOn.OnSettingChanged(_, setting, value)
     local variable = setting:GetVariable()
     Settings.Options[variable] = value
 end
-
-AddOn.Settings = Settings
 
 -- Interface Options
 -- Main
@@ -80,9 +77,19 @@ _G.Settings.RegisterAddOnCategory(mainCategory)
 -- General
 Settings.Interface.GeneralPanel = AddOn.AddOptionsSubCategory("General")
 
+function Settings.GetVariable(name)
+    return AddOn.AddonName .. "_" .. name
+end
+
+function Settings.Get(name)
+    return Settings.Options[Settings.GetVariable(name)]
+end
+
 function Settings.Setup()
     do
-        local variable = "welcomeMessage"
+        local variable = Settings.GetVariable("WelcomeMessage")
+        Settings.DefaultSettings[variable] = true
+
         local name = "Welcome Message"
         local tooltip = "Enable or disable the welcome message."
         local defaultValue = Settings.DefaultSettings[variable]
@@ -104,7 +111,9 @@ function Settings.Setup()
     end
 
     do
-        local variable = "enableTooltips"
+        local variable = Settings.GetVariable("EnableTooltips")
+        Settings.DefaultSettings[variable] = true
+
         local name = "Tooltips"
         local tooltip = "Enable or disable the tooltips."
         local defaultValue = Settings.DefaultSettings[variable]
@@ -126,7 +135,9 @@ function Settings.Setup()
     end
 
     do
-        local variable = "showAddonNameInTooltip"
+        local variable = Settings.GetVariable("ShowAddonNameInTooltip")
+        Settings.DefaultSettings[variable] = true
+
         local name = "Addon Name in Tooltip"
         local tooltip = "Enable or disable the addon name in the tooltip."
         local defaultValue = Settings.DefaultSettings[variable]
@@ -148,7 +159,9 @@ function Settings.Setup()
     end
 
     do
-        local variable = "enableAutotrack"
+        local variable = Settings.GetVariable("EnableAutotrack")
+        Settings.DefaultSettings[variable] = true
+
         local name = "Automatic Tracking"
         local tooltip = "Enable or disable the automatic tracking."
         local defaultValue = Settings.DefaultSettings[variable]
@@ -170,7 +183,9 @@ function Settings.Setup()
     end
 
     do
-        local variable = "chatMessages"
+        local variable = Settings.GetVariable("ChatMessages")
+        Settings.DefaultSettings[variable] = false
+
         local name = "Chat Messages"
         local tooltip = "Enable or disable the chat messages."
         local defaultValue = Settings.DefaultSettings[variable]

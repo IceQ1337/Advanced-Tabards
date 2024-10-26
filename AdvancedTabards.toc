@@ -9,7 +9,7 @@
 ## X-Website: https://www.curseforge.com/wow/addons/advanced-tabards
 ## X-Curse-Project-ID: 306771
 
-## SavedVariables: AT_Settings
+## SavedVariables: AdvancedTabards_Settings
 ## DefaultState: Enabled
 
 Core.lua
