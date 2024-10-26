@@ -86,6 +86,8 @@ function Settings.Get(name)
 end
 
 function Settings.Setup()
+    Settings.Options = _G[AddOn.SettingsKey] or Settings.DefaultSettings
+
     do
         local variable = Settings.GetVariable("WelcomeMessage")
         Settings.DefaultSettings[variable] = true
