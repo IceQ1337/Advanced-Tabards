@@ -8,7 +8,7 @@ AddOn.AddonVersion = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Version")
 AddOn.AddonAuthor = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Author")
 AddOn.AddonNotes = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Notes")
 
-_G["AdvancedTabards"] = AddOn
+_G[AddOn.AddonName] = AddOn
 
 -- Text Globals
 TEXT_COLOR_RED = "|cFFFF0000"
