@@ -3,10 +3,12 @@
 
 -- Addon Variables
 local AddonName, AddOn = ...
-AddOn.AddonName = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Title")
-AddOn.AddonVersion = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Version")
-AddOn.AddonAuthor = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Author")
-AddOn.AddonNotes = C_AddOns.GetAddOnMetadata("AdvancedTabards", "Notes")
+
+AddOn.AddonName = "AdvancedTabards"
+AddOn.AddonTitle = C_AddOns.GetAddOnMetadata(AddOn.AddonName, "Title")
+AddOn.AddonVersion = C_AddOns.GetAddOnMetadata(AddOn.AddonName, "Version")
+AddOn.AddonAuthor = C_AddOns.GetAddOnMetadata(AddOn.AddonName, "Author")
+AddOn.AddonNotes = C_AddOns.GetAddOnMetadata(AddOn.AddonName, "Notes")
 
 _G[AddOn.AddonName] = AddOn
 
@@ -24,7 +26,7 @@ function AddOn.PrintShortMSG(msg)
 end
 
 function AddOn.PrintLongMSG(msg)
-    text = TEXT_COLOR_CYAN .. AddOn.AddonName .. ": " .. TEXT_COLOR_RESET .. msg
+    text = TEXT_COLOR_CYAN .. AddOn.AddonTitle .. ": " .. TEXT_COLOR_RESET .. msg
     DEFAULT_CHAT_FRAME:AddMessage(text)
 end
 
@@ -36,7 +38,6 @@ function AddOn:ADDON_LOADED(addon)
 
     AddOn.eventFrame:UnregisterEvent("ADDON_LOADED")
 
-    AddOn.Settings.Options = _G[AddOn.SettingsKey] or AddOn.Settings.DefaultSettings
     AddOn.Settings.Setup()
 
     if AddOn.Settings.Get("WelcomeMessage") then
@@ -167,7 +168,7 @@ function AddOn.SetGameTooltip(tooltip)
                 tooltip:AddLine("\n")
 
                 if AddOn.Settings.Get("ShowAddonNameInTooltip") then
-                    tooltip:AddLine("[" .. AddOn.AddonName .. "]", 0, 1, 1)
+                    tooltip:AddLine("[" .. AddOn.AddonTitle .. "]", 0, 1, 1)
                 end
 
                 tooltip:AddLine(factionData.name .. " - " .. factionInfo)
