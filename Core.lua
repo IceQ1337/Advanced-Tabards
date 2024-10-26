@@ -4,7 +4,7 @@
 -- Addon Variables
 local AddonName, AddOn = ...
 
-AddOn.AddonName = "AdvancedTabards"
+AddOn.AddonName = AddonName
 AddOn.AddonTitle = C_AddOns.GetAddOnMetadata(AddOn.AddonName, "Title")
 AddOn.AddonVersion = C_AddOns.GetAddOnMetadata(AddOn.AddonName, "Version")
 AddOn.AddonAuthor = C_AddOns.GetAddOnMetadata(AddOn.AddonName, "Author")
