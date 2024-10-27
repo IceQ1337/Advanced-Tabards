@@ -97,6 +97,10 @@ function Settings.Setup()
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
 
+        if currentValue == nil then
+            currentValue = defaultValue
+        end
+
         local setting =
             _G.Settings.RegisterAddOnSetting(
             Settings.Interface.GeneralPanel,
@@ -107,6 +111,7 @@ function Settings.Setup()
             name,
             defaultValue
         )
+
         _G.Settings.SetValue(variable, currentValue)
         _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
         _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
@@ -121,6 +126,10 @@ function Settings.Setup()
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
 
+        if currentValue == nil then
+            currentValue = defaultValue
+        end
+
         local setting =
             _G.Settings.RegisterAddOnSetting(
             Settings.Interface.GeneralPanel,
@@ -131,6 +140,7 @@ function Settings.Setup()
             name,
             defaultValue
         )
+
         _G.Settings.SetValue(variable, currentValue)
         _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
         _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
@@ -145,6 +155,10 @@ function Settings.Setup()
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
 
+        if currentValue == nil then
+            currentValue = defaultValue
+        end
+
         local setting =
             _G.Settings.RegisterAddOnSetting(
             Settings.Interface.GeneralPanel,
@@ -155,6 +169,7 @@ function Settings.Setup()
             name,
             defaultValue
         )
+
         _G.Settings.SetValue(variable, currentValue)
         _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
         _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
@@ -169,6 +184,10 @@ function Settings.Setup()
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
 
+        if currentValue == nil then
+            currentValue = defaultValue
+        end
+
         local setting =
             _G.Settings.RegisterAddOnSetting(
             Settings.Interface.GeneralPanel,
@@ -179,6 +198,7 @@ function Settings.Setup()
             name,
             defaultValue
         )
+
         _G.Settings.SetValue(variable, currentValue)
         _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
         _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
@@ -193,6 +213,10 @@ function Settings.Setup()
         local defaultValue = Settings.DefaultSettings[variable]
         local currentValue = Settings.Options[variable]
 
+        if currentValue == nil then
+            currentValue = defaultValue
+        end
+
         local setting =
             _G.Settings.RegisterAddOnSetting(
             Settings.Interface.GeneralPanel,
@@ -203,6 +227,7 @@ function Settings.Setup()
             name,
             defaultValue
         )
+
         _G.Settings.SetValue(variable, currentValue)
         _G.Settings.CreateCheckbox(Settings.Interface.GeneralPanel, setting, tooltip)
         _G.Settings.SetOnValueChangedCallback(variable, AddOn.OnSettingChanged)
